@@ -1,5 +1,7 @@
 package com.hsy.platform.entity;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -31,8 +33,7 @@ public class PageData extends HashMap implements Map {
 		Map returnMap = new HashMap();
 		Iterator entries = properties.entrySet().iterator();
 		Entry entry;
-		String name = "";
-		String value = "";
+		String name ,value;
 		while (entries.hasNext()) {
 			entry = (Entry) entries.next();
 			name = (String) entry.getKey();
@@ -40,11 +41,7 @@ public class PageData extends HashMap implements Map {
 			if(null == valueObj){ 
 				value = ""; 
 			}else if(valueObj instanceof String[]){
-				String[] values = (String[])valueObj;
-				for(int i=0;i<values.length;i++){ 
-					 value = values[i] + ",";
-				}
-				value = value.substring(0, value.length()-1); 
+				value = StringUtils.join((String[])valueObj,",");
 			}else{
 				value = valueObj.toString(); 
 			}
@@ -84,17 +81,16 @@ public class PageData extends HashMap implements Map {
 	public Object put(Object key, Object value) {
 		String keyString = key.toString().toLowerCase();
 		if(keyString.contains("_")){
-			String[] keyArray = keyString.split("_");
+			String[] keyArray = StringUtils.split(keyString,"_");
 			StringBuilder sb = new StringBuilder(keyArray[0]);
 			for(int i=1;i<keyArray.length;i++){
 				String keyItem = keyArray[i];
 				if("".equals(keyItem))continue;
-				keyItem = keyItem.substring(0,1).toUpperCase()+keyItem.substring(1,keyItem.length());
-				sb.append(keyItem);
+				sb.append(keyItem.substring(0,1).toUpperCase()).append(keyItem.substring(1,keyItem.length()));
 			}
 			keyString = sb.toString();
 		}
-		if(value ==null) value="";
+		if(value == null) value="";
 		return map.put(keyString, value);
 	}
 
@@ -150,24 +146,26 @@ public class PageData extends HashMap implements Map {
 	public Collection values() {
 		return map.values();
 	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		Iterator entries = map.entrySet().iterator();
+		Iterator<Entry> entries = map.entrySet().iterator();
 		Entry entry = null;
 		//遍历map,并将map中的key,value写入sb中
 		while(entries.hasNext()){
-			entry = (Entry) entries.next();
+			entry = entries.next();
 			if(null!=entry){
-				sb.append((String)entry.getKey()+":");
+				sb.append((String)entry.getKey()).append(":");
 				Object value = entry.getValue();
 				if(value instanceof Timestamp || value instanceof Date) {
-					sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getValue())+"\n");
+					sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entry.getValue())).append("\n");
 				}else if(value instanceof BigDecimal){
 					BigDecimal bigValue = (BigDecimal)value;
-					sb.append(bigValue.floatValue()+"\n");
+					sb.append(bigValue.floatValue()).append("\n");
 				}else if(value instanceof String){
-					sb.append(value.toString()+"\n");
+					sb.append(value.toString()).append("\n");
 				}else{
 					sb.append("\n");
 				}

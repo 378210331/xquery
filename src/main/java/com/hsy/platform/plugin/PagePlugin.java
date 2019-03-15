@@ -71,7 +71,6 @@ public class PagePlugin implements Interceptor {
 					Page page = null;
 					if(parameterObject instanceof Page){	//参数就是Page实体
 						 page = (Page) parameterObject;
-						 page.setEntityOrField(true);	 
 						page.setTotal(count);
 					}else{	//参数为某个实体，该实体拥有Page属性
 						Field pageField = ReflectHelper.getFieldByFieldName(parameterObject,"page");
@@ -79,7 +78,6 @@ public class PagePlugin implements Interceptor {
 							page = (Page) ReflectHelper.getValueByFieldName(parameterObject,"page");
 							if(page==null)
 								page = new Page();
-							page.setEntityOrField(false); 
 							page.setTotal(count);
 							ReflectHelper.setValueByFieldName(parameterObject,"page", page); //通过反射，对实体对象设置分页对象
 						}else{

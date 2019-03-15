@@ -3,6 +3,7 @@ package com.hsy.platform.controller;
 import com.hsy.platform.entity.Page;
 import com.hsy.platform.entity.PageData;
 import com.hsy.platform.util.UuidUtil;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api(value="基础controller")
 public abstract class BaseRestController {
 
     public static final String SAVE_SUCCESS = "保存成功";
