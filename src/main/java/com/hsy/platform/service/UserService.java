@@ -36,5 +36,4 @@ public class UserService extends BaseService {
         }
         super.save(pageData);
     }
-
 }

@@ -7,4 +7,9 @@
 		select * from t_sys_user where login_name = #{loginName} and yxsjq &lt;= sysdate and yxsjz &gt;= sysdate
 	</select>
 
+	<insert id="save" parameterType="pd">
+		insert into t_sys_user (user_id, login_name, login_password, user_name, lrrq, yxsjq, yxsjz, yxbz,jg_dm)
+		values (#{userId},#{loginName},#{loginPassword},#{userName},sysdate,to_date(#{yxsjq},'yyyy-MM-dd'),to_date(#{yxsjz},'yyyy-MM-dd'),'Y',#{jgDm})
+	</insert>
+
 </mapper>

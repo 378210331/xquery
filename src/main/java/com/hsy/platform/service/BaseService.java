@@ -5,6 +5,7 @@ package com.hsy.platform.service;
 import com.hsy.platform.dao.DaoSupport;
 import com.hsy.platform.entity.Page;
 import com.hsy.platform.entity.PageData;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,6 +21,7 @@ public abstract class BaseService {
      * @param pageData
      * @throws Exception
      */
+    @Transactional(rollbackFor = Exception.class)
     public void save(PageData pageData)throws Exception {
         dao.save(getMapperName()+".save", pageData);
     }
@@ -29,6 +31,7 @@ public abstract class BaseService {
      * @param pdList
      * @throws Exception
      */
+    @Transactional(rollbackFor = Exception.class)
     public void batchSave(List<PageData> pdList)throws Exception {
         dao.batchSave(getMapperName()+".batchSave", pdList);
     }
@@ -38,6 +41,7 @@ public abstract class BaseService {
      * @param pd
      * @throws Exception
      */
+    @Transactional(rollbackFor = Exception.class)
     public void update(PageData pd)throws Exception {
         dao.update(getMapperName()+".update", pd);
     }
@@ -109,6 +113,7 @@ public abstract class BaseService {
      * @param pd
      * @throws Exception
      */
+    @Transactional(rollbackFor = Exception.class)
     public void delete(PageData pd) throws Exception {
         dao.delete(getMapperName()+".delete", pd);
     }
@@ -118,6 +123,7 @@ public abstract class BaseService {
      * @param pdList
      * @throws Exception
      */
+    @Transactional(rollbackFor = Exception.class)
     public void batchDelete(List<PageData> pdList) throws Exception {
         dao.batchDelete(getMapperName()+".delete", pdList);
     }
