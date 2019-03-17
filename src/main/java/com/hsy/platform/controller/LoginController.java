@@ -39,7 +39,7 @@ public class LoginController extends  BaseRestController {
 
     @RequestMapping("index")
     public Page index() throws Exception {
-       PageData pd =  userService.getUserByLoginName("super");
+      PageData pd =  userService.getUserByLoginName("super");
         Page page =  getPage();
         page.setPd(pd);
         return page;
